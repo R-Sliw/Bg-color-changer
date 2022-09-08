@@ -1,11 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import "./App.css";
-import Nav from "./componentes/Nav";
+import Nav from "./components/Nav";
+import { reducer } from "./reducer";
+
+const initialState = {
+  color: "rgb(0,0,0)",
+  // color2: "rgb(255, 255, 255)",
+  //degValue: 180,
+  //startInterval: true,
+};
 
 const App = () => {
-  const [color, setColor] = useState("rgb(0,0,0)");
   const [color2, setColor2] = useState("rgb(255,255,255)");
   const [degValue, setDegValue] = useState(180);
+  const [startInterval, setStartInterval] = useState(true);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
   const changeColor = () => {
     const r = Math.floor(Math.random() * 256);
@@ -15,17 +24,19 @@ const App = () => {
     const b2 = Math.floor(Math.random() * 256);
     const g2 = Math.floor(Math.random() * 256);
 
-    setColor(`rgb(${r}, ${b}, ${g})`);
     setColor2(`rgb(${r2}, ${b2}, ${g2})`);
+    dispatch({ type: "NEW_COLOR" });
   };
 
   useEffect(() => {
-    const newColor = setInterval(() => changeColor(), 10000);
+    if (startInterval) {
+      const newColor = setInterval(() => changeColor(), 4000);
 
-    return () => {
-      clearInterval(newColor);
-    };
-  }, [color]);
+      return () => {
+        clearInterval(newColor);
+      };
+    }
+  }, [state.color, startInterval]);
 
   return (
     <main className="App">
@@ -33,14 +44,21 @@ const App = () => {
       <div
         className="App_container"
         style={{
-          background: `linear-gradient(${degValue}deg, ${color} 0%, ${color2} 100%)`,
+          background: `linear-gradient(${degValue}deg, ${state.color} 0%, ${color2} 100%)`,
         }}
       >
-        <div className="App_text_color">
-          linear-gradient({degValue}deg,{color}0%,{color2} 100%)
+        <div className="App_info">
+          linear-gradient({degValue}deg,{state.color}0%,{color2} 100%)
         </div>
-        <button type="button" className="App_button" onClick={changeColor}>
+        <button type="button" className="App_btn-changer" onClick={changeColor}>
           Change color
+        </button>
+        <button
+          type="button"
+          className={`App_btn ${startInterval ? "stop" : "start"}`}
+          onClick={() => setStartInterval(!startInterval)}
+        >
+          {startInterval ? "stop" : "start"} color changing
         </button>
       </div>
     </main>

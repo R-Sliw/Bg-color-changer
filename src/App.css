@@ -4,6 +4,8 @@
 :root {
   font-size: 10px;
   font-family: 'Cinzel', serif;
+  color: #000;
+  text-shadow: 0px 0px 7px rgb(255, 255, 255);
 }
 
 * {
@@ -18,6 +20,12 @@
 .nav {
   position: absolute;
   font-weight: 700;
+  top: 1rem;
+  left: 2rem;
+}
+
+.nav_input {
+  margin: 2rem;
 }
 
 .App_container {
@@ -27,16 +35,78 @@
   height: 100vh;
 }
 
-.App_text_color {
+.App_info {
   font-size: 4rem;
   margin-bottom: 4rem;
-  color: white;
-  mix-blend-mode: difference;
-  text-shadow: 0px 0px 7px rgba(0, 0, 0, 1);
+  font-weight: 700;
 }
 
-.App_button {
-  width: 14rem;
-  height: 3rem;
+.App_btn-changer {
+  width: 20rem;
+  height: 4rem;
   justify-self: center;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  box-shadow: inset 0px 1px 0px 0px #bee2f9;
+  background: linear-gradient(to bottom, #63b8ee 5%, #468ccf 100%);
+  background-color: #63b8ee;
+  border-radius: 6px;
+  border: 1px solid #3866a3;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-size: 15px;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #7cacde;
+  margin: 1rem;
+}
+
+.App_btn-changer:hover {
+  background: linear-gradient(to bottom, #468ccf 5%, #63b8ee 100%);
+  background-color: #468ccf;
+}
+
+.App_btn-changer:active {
+  position: relative;
+  top: 1px;
+}
+
+.App_btn {
+  width: 25rem;
+  height: 4rem;
+  justify-self: center;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  box-shadow: inset 0px 1px 0px 0px #bee2f9;
+  background: linear-gradient(to bottom, #63b8ee 5%, #468ccf 100%);
+  background-color: #63b8ee;
+  border-radius: 6px;
+  border: 1px solid #3866a3;
+  display: inline-block;
+  cursor: pointer;
+  color: #000000;
+  font-size: 15px;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #7cacde;
+  margin: 1rem;
+}
+
+.App_btn:hover {
+  background: linear-gradient(to bottom, #468ccf 5%, #63b8ee 100%);
+  background-color: #468ccf;
+}
+
+.App_btn:active {
+  position: relative;
+  top: 1px;
+}
+
+.stop {
+  color: #b22222;
+}
+
+.start {
+  color: #000000;
 }

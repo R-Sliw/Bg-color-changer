@@ -6,7 +6,7 @@ interface Props {
 const Nav = ({ setDegValue, degValue }: Props) => {
   return (
     <nav className="nav">
-      <label htmlFor="deg">
+      <label htmlFor="deg" className="nav_text">
         deg changer
         <input
           type="range"
@@ -16,6 +16,7 @@ const Nav = ({ setDegValue, degValue }: Props) => {
           max="360"
           value={degValue}
           onChange={(e) => setDegValue(parseInt(e.target.value))}
+          className="nav_input"
         />{" "}
         {degValue}
       </label>
