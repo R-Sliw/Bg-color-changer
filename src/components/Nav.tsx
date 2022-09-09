@@ -1,9 +1,9 @@
 interface Props {
   degValue: number;
-  setDegValue: React.Dispatch<React.SetStateAction<number>>;
+  handleDeg: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Nav = ({ setDegValue, degValue }: Props) => {
+const Nav = ({ handleDeg, degValue }: Props) => {
   return (
     <nav className="nav">
       <label htmlFor="deg" className="nav_text">
@@ -15,7 +15,7 @@ const Nav = ({ setDegValue, degValue }: Props) => {
           min="0"
           max="360"
           value={degValue}
-          onChange={(e) => setDegValue(parseInt(e.target.value))}
+          onChange={(e) => handleDeg(e)}
           className="nav_input"
         />{" "}
         {degValue}

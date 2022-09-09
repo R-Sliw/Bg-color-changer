@@ -5,27 +5,20 @@ import { reducer } from "./reducer";
 
 const initialState = {
   color: "rgb(0,0,0)",
-  // color2: "rgb(255, 255, 255)",
-  //degValue: 180,
-  //startInterval: true,
+  color2: "rgb(255, 255, 255)",
+  degValue: 180,
+  startInterval: true,
 };
 
 const App = () => {
-  const [color2, setColor2] = useState("rgb(255,255,255)");
-  const [degValue, setDegValue] = useState(180);
-  const [startInterval, setStartInterval] = useState(true);
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  const { color, color2, degValue, startInterval } = state;
   const changeColor = () => {
-    const r = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const r2 = Math.floor(Math.random() * 256);
-    const b2 = Math.floor(Math.random() * 256);
-    const g2 = Math.floor(Math.random() * 256);
-
-    setColor2(`rgb(${r2}, ${b2}, ${g2})`);
     dispatch({ type: "NEW_COLOR" });
+  };
+
+  const handleDeg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "DEG_CHANGER", payload: parseInt(e.target.value) });
   };
 
   useEffect(() => {
@@ -36,19 +29,19 @@ const App = () => {
         clearInterval(newColor);
       };
     }
-  }, [state.color, startInterval]);
+  }, [color, startInterval]);
 
   return (
     <main className="App">
-      <Nav setDegValue={setDegValue} degValue={degValue} />
+      <Nav handleDeg={handleDeg} degValue={degValue} />
       <div
         className="App_container"
         style={{
-          background: `linear-gradient(${degValue}deg, ${state.color} 0%, ${color2} 100%)`,
+          background: `linear-gradient(${degValue}deg, ${color} 0%, ${color2} 100%)`,
         }}
       >
         <div className="App_info">
-          linear-gradient({degValue}deg,{state.color}0%,{color2} 100%)
+          linear-gradient({degValue}deg,{color}0%,{color2} 100%)
         </div>
         <button type="button" className="App_btn-changer" onClick={changeColor}>
           Change color
@@ -56,7 +49,7 @@ const App = () => {
         <button
           type="button"
           className={`App_btn ${startInterval ? "stop" : "start"}`}
-          onClick={() => setStartInterval(!startInterval)}
+          onClick={() => dispatch({ type: "START_INTERVAL" })}
         >
           {startInterval ? "stop" : "start"} color changing
         </button>
