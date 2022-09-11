@@ -1,9 +1,13 @@
+import { useGlobalContext } from "../logic/context";
+
 interface Props {
   degValue: number;
   handleDeg: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Nav = ({ handleDeg, degValue }: Props) => {
+const Nav = () => {
+  const { degValue, handleDeg } = useGlobalContext() as Props;
+
   return (
     <nav className="nav">
       <label htmlFor="deg" className="nav_text">

@@ -2,13 +2,15 @@ interface State {
   color: string;
   color2: string;
   degValue: number;
-  startInterval: boolean;
+  interval: boolean;
 }
 
 type Action =
-  | { type: "NEW_COLOR" }
-  | { type: "DEG_CHANGER"; payload: number }
-  | { type: "START_INTERVAL" };
+  | { type: "START_INTERVAL" | "NEW_COLOR" }
+  | {
+      type: "DEG_CHANGER";
+      payload: number;
+    };
 
 export const reducer = (state: State, action: Action) => {
   const rgbArray = [1, 2, 3, 4, 5, 6];
@@ -34,10 +36,27 @@ export const reducer = (state: State, action: Action) => {
     case "START_INTERVAL":
       return {
         ...state,
-        startInterval: !state.startInterval,
+        interval: !state.interval,
       };
 
     default:
       return state;
   }
+  // const GET_REDUCER = {
+  //   NEW_COLOR: {
+  //     ...state,
+  //     color: `rgb(${r}, ${b}, ${g})`,
+  //     color2: `rgb(${r2}, ${b2}, ${g2})`,
+  //   },
+  //   DEG_CHANGER: {
+  //     ...state,
+  //     degValue: (action as ActionDeg).payload,
+  //   },
+  //   START_INTERVAL: {
+  //     ...state,
+  //     startInterval: !state.startInterval,
+  //   },
+  // };
+
+  // return GET_REDUCER[action.type] || state;
 };

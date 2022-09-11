@@ -1,39 +1,26 @@
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
 import "./App.css";
 import Nav from "./components/Nav";
-import { reducer } from "./reducer";
+import { useGlobalContext } from "./logic/context";
+import { reducer } from "./logic/reducer";
 
-const initialState = {
-  color: "rgb(0,0,0)",
-  color2: "rgb(255, 255, 255)",
-  degValue: 180,
-  startInterval: true,
-};
+interface LogicContext {
+  changeColor: () => void;
+  color: string;
+  color2: string;
+  handleDeg: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  degValue: number;
+  interval: boolean;
+  startInterval: () => void;
+}
 
 const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const { color, color2, degValue, startInterval } = state;
-  const changeColor = () => {
-    dispatch({ type: "NEW_COLOR" });
-  };
-
-  const handleDeg = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "DEG_CHANGER", payload: parseInt(e.target.value) });
-  };
-
-  useEffect(() => {
-    if (startInterval) {
-      const newColor = setInterval(() => changeColor(), 4000);
-
-      return () => {
-        clearInterval(newColor);
-      };
-    }
-  }, [color, startInterval]);
+  const { changeColor, color, color2, degValue, startInterval, interval } =
+    useGlobalContext() as LogicContext;
 
   return (
     <main className="App">
-      <Nav handleDeg={handleDeg} degValue={degValue} />
+      <Nav />
       <div
         className="App_container"
         style={{
@@ -48,10 +35,10 @@ const App = () => {
         </button>
         <button
           type="button"
-          className={`App_btn ${startInterval ? "stop" : "start"}`}
-          onClick={() => dispatch({ type: "START_INTERVAL" })}
+          className={`App_btn ${interval ? "stop" : "start"}`}
+          onClick={startInterval}
         >
-          {startInterval ? "stop" : "start"} color changing
+          {interval ? "stop" : "start"} color changing
         </button>
       </div>
     </main>
