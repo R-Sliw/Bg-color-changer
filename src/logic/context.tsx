@@ -12,19 +12,21 @@ interface ContextProviderProps {
 }
 
 const initialState = {
-  color: "rgb(255, 255, 255)",
-  color2: "rgb(0,0,0)",
+  color: "255, 255, 255",
+  color2: "0,0,0",
   degValue: 180,
   interval: true,
+  procentColor1: 0,
+  procentColor2: 100,
 };
 
 const AppContext = createContext({});
 
 const AppProvider = ({ children }: ContextProviderProps) => {
-  const [{ color, color2, degValue, interval }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [
+    { color, color2, degValue, interval, procentColor1, procentColor2 },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const changeColor = () => {
     dispatch({ type: "NEW_COLOR" });
@@ -36,6 +38,18 @@ const AppProvider = ({ children }: ContextProviderProps) => {
 
   const startInterval = () => {
     dispatch({ type: "START_INTERVAL" });
+  };
+
+  const handleColorProcent = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "PROCENT_COLOR1", payload: parseInt(e.target.value) });
+  };
+
+  const handleColorProcent2 = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: "PROCENT_COLOR2", payload: parseInt(e.target.value) });
+  };
+
+  const handleReset = () => {
+    dispatch({ type: "RESET", payload: initialState });
   };
 
   useEffect(() => {
@@ -58,6 +72,11 @@ const AppProvider = ({ children }: ContextProviderProps) => {
         degValue,
         startInterval,
         interval,
+        handleColorProcent,
+        procentColor1,
+        procentColor2,
+        handleColorProcent2,
+        handleReset,
       }}
     >
       {children}

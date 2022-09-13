@@ -18,10 +18,17 @@
 }
 
 .nav {
-  position: absolute;
+  position: fixed;
   font-weight: 700;
   top: 1rem;
   left: 2rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.nav_text {
+  margin-inline: 3rem;
 }
 
 .nav_input {
@@ -109,4 +116,9 @@
 
 .start {
   color: #000000;
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0
 }

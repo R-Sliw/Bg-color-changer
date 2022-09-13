@@ -1,8 +1,7 @@
-import { useEffect, useReducer } from "react";
 import "./App.css";
+import { BottomNav } from "./components/BottomNav";
 import Nav from "./components/Nav";
 import { useGlobalContext } from "./logic/context";
-import { reducer } from "./logic/reducer";
 
 interface LogicContext {
   changeColor: () => void;
@@ -12,11 +11,23 @@ interface LogicContext {
   degValue: number;
   interval: boolean;
   startInterval: () => void;
+  procentColor1: number;
+  procentColor2: number;
+  handleReset: () => void;
 }
 
 const App = () => {
-  const { changeColor, color, color2, degValue, startInterval, interval } =
-    useGlobalContext() as LogicContext;
+  const {
+    changeColor,
+    color,
+    color2,
+    degValue,
+    startInterval,
+    interval,
+    procentColor1,
+    procentColor2,
+    handleReset,
+  } = useGlobalContext() as LogicContext;
 
   return (
     <main className="App">
@@ -24,11 +35,12 @@ const App = () => {
       <div
         className="App_container"
         style={{
-          background: `linear-gradient(${degValue}deg, ${color} 0%, ${color2} 100%)`,
+          background: `linear-gradient(${degValue}deg, rgb(${color})${procentColor1}%, rgb(${color2}) ${procentColor2}%)`,
         }}
       >
         <div className="App_info">
-          linear-gradient({degValue}deg,{color}0%,{color2} 100%)
+          linear-gradient({degValue}deg,rgb({color}){procentColor1}%,rgb(
+          {color2}) {procentColor2}%)
         </div>
         <button type="button" className="App_btn-changer" onClick={changeColor}>
           Change color
@@ -40,7 +52,11 @@ const App = () => {
         >
           {interval ? "stop" : "start"} color changing
         </button>
+        <button type="button" className="App_btn-changer" onClick={handleReset}>
+          restart
+        </button>
       </div>
+      <BottomNav />
     </main>
   );
 };

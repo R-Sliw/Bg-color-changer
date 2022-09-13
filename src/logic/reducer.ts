@@ -3,13 +3,19 @@ interface State {
   color2: string;
   degValue: number;
   interval: boolean;
+  procentColor1: number;
+  procentColor2: number;
 }
 
 type Action =
   | { type: "START_INTERVAL" | "NEW_COLOR" }
   | {
-      type: "DEG_CHANGER";
+      type: "DEG_CHANGER" | "PROCENT_COLOR1" | "PROCENT_COLOR2";
       payload: number;
+    }
+  | {
+      type: "RESET";
+      payload: State;
     };
 
 export const reducer = (state: State, action: Action) => {
@@ -23,8 +29,8 @@ export const reducer = (state: State, action: Action) => {
     case "NEW_COLOR":
       return {
         ...state,
-        color: `rgb(${r}, ${b}, ${g})`,
-        color2: `rgb(${r2}, ${b2}, ${g2})`,
+        color: `${r}, ${b}, ${g}`,
+        color2: `${r2}, ${b2}, ${g2}`,
       };
 
     case "DEG_CHANGER":
@@ -39,24 +45,24 @@ export const reducer = (state: State, action: Action) => {
         interval: !state.interval,
       };
 
+    case "PROCENT_COLOR1":
+      return {
+        ...state,
+        procentColor1: action.payload,
+      };
+
+    case "PROCENT_COLOR2":
+      return {
+        ...state,
+        procentColor2: action.payload,
+      };
+
+    case "RESET":
+      return {
+        ...action.payload,
+      };
+
     default:
       return state;
   }
-  // const GET_REDUCER = {
-  //   NEW_COLOR: {
-  //     ...state,
-  //     color: `rgb(${r}, ${b}, ${g})`,
-  //     color2: `rgb(${r2}, ${b2}, ${g2})`,
-  //   },
-  //   DEG_CHANGER: {
-  //     ...state,
-  //     degValue: (action as ActionDeg).payload,
-  //   },
-  //   START_INTERVAL: {
-  //     ...state,
-  //     startInterval: !state.startInterval,
-  //   },
-  // };
-
-  // return GET_REDUCER[action.type] || state;
 };
