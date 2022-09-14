@@ -1,5 +1,9 @@
 interface State {
-  color: string;
+  color: {
+    r: number;
+    g: number;
+    b: number;
+  };
   color2: string;
   degValue: number;
   interval: boolean;
@@ -11,6 +15,10 @@ type Action =
   | { type: "START_INTERVAL" | "NEW_COLOR" }
   | {
       type: "DEG_CHANGER" | "PROCENT_COLOR1" | "PROCENT_COLOR2";
+      payload: number;
+    }
+  | {
+      type: "R_COLOR";
       payload: number;
     }
   | {
@@ -29,8 +37,13 @@ export const reducer = (state: State, action: Action) => {
     case "NEW_COLOR":
       return {
         ...state,
-        color: `${r}, ${b}, ${g}`,
-        color2: `${r2}, ${b2}, ${g2}`,
+        color: {
+          ...state.color,
+          r,
+          g,
+          b,
+        },
+        color2: `${r2},${b2},${g2}`,
       };
 
     case "DEG_CHANGER":
@@ -60,6 +73,15 @@ export const reducer = (state: State, action: Action) => {
     case "RESET":
       return {
         ...action.payload,
+      };
+
+    case "R_COLOR":
+      return {
+        ...state,
+        color: true && {
+          ...state.color,
+          r: action.payload,
+        },
       };
 
     default:

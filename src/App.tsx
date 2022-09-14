@@ -5,7 +5,11 @@ import { useGlobalContext } from "./logic/context";
 
 interface LogicContext {
   changeColor: () => void;
-  color: string;
+  color: {
+    r: number;
+    g: number;
+    b: number;
+  };
   color2: string;
   handleDeg: (e: React.ChangeEvent<HTMLInputElement>) => void;
   degValue: number;
@@ -19,7 +23,7 @@ interface LogicContext {
 const App = () => {
   const {
     changeColor,
-    color,
+    color: { r, g, b },
     color2,
     degValue,
     startInterval,
@@ -28,18 +32,17 @@ const App = () => {
     procentColor2,
     handleReset,
   } = useGlobalContext() as LogicContext;
-
   return (
     <main className="App">
       <Nav />
       <div
         className="App_container"
         style={{
-          background: `linear-gradient(${degValue}deg, rgb(${color})${procentColor1}%, rgb(${color2}) ${procentColor2}%)`,
+          background: `linear-gradient(${degValue}deg,rgb(${r},${g},${b})${procentColor1}%,rgb(${color2})${procentColor2}%)`,
         }}
       >
         <div className="App_info">
-          linear-gradient({degValue}deg,rgb({color}){procentColor1}%,rgb(
+          linear-gradient({degValue}deg,rgb({r},{g},{b}){procentColor1}%,rgb(
           {color2}) {procentColor2}%)
         </div>
         <button type="button" className="App_btn-changer" onClick={changeColor}>

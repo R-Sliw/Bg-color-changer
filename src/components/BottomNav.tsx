@@ -1,16 +1,22 @@
 import { useGlobalContext } from "../logic/context";
 
 interface Props {
-  rColor: number;
+  color: {
+    r: number;
+    g: number;
+    b: number;
+  };
   handleRColor: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const BottomNav = () => {
-  const { rColor, handleRColor } = useGlobalContext() as Props;
+  const {
+    color: { r, g },
+    handleRColor,
+  } = useGlobalContext() as Props;
 
   return (
     <div className="bottomNav">
-      {" "}
       <label htmlFor="rColor" className="nav_text">
         r color
         <input
@@ -19,11 +25,25 @@ export const BottomNav = () => {
           id="rColor"
           min="0"
           max="255"
-          value={rColor}
+          value={r}
           onChange={(e) => handleRColor(e)}
           className="nav_input"
         />{" "}
-        {rColor}
+        {r}
+      </label>
+      <label htmlFor="gColor" className="nav_text">
+        g color
+        <input
+          type="range"
+          name="gColor"
+          id="gColor"
+          min="0"
+          max="255"
+          value={g}
+          onChange={(e) => handleRColor(e)}
+          className="nav_input"
+        />{" "}
+        {g}
       </label>
     </div>
   );

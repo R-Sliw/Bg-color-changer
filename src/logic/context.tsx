@@ -12,7 +12,11 @@ interface ContextProviderProps {
 }
 
 const initialState = {
-  color: "255, 255, 255",
+  color: {
+    r: 255,
+    g: 255,
+    b: 255,
+  },
   color2: "0,0,0",
   degValue: 180,
   interval: true,
@@ -52,6 +56,17 @@ const AppProvider = ({ children }: ContextProviderProps) => {
     dispatch({ type: "RESET", payload: initialState });
   };
 
+  const handleRColor = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    console.log(e.target.name);
+    if (name === "rColor") {
+      dispatch({ type: "R_COLOR", payload: parseInt(value) });
+    }
+    if (name === "gColor") {
+      dispatch({ type: "R_COLOR", payload: parseInt(value) });
+    }
+  };
+
   useEffect(() => {
     if (interval) {
       const newColor = setInterval(() => changeColor(), 4000);
@@ -77,6 +92,7 @@ const AppProvider = ({ children }: ContextProviderProps) => {
         procentColor2,
         handleColorProcent2,
         handleReset,
+        handleRColor,
       }}
     >
       {children}
